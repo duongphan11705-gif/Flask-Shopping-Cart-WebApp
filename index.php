@@ -32,7 +32,7 @@ function callGemini($prompt) {
 $conn = mysqli_init();
 mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL);
 // Kết nối với Host, User, Pass, DB, Port và cờ kết nối SSL
-mysqli_real_connect($conn, "mysql-17895759-duongphan11705-c6e4.i.aivencloud.com", "avnadmin", "AVNS_1xyPm72gzoTQSxU-0PD", "defaultdb", 28878, NULL, MYSQLI_CLIENT_SSL);
+mysqli_real_connect($conn, "mysql-17895759-duongphan11705-c6e4.i.aivencloud.com", "avnadmin", "AVNS_lxyPm72gzoTQSxU-OPD", "defaultdb", 28878, NULL, MYSQLI_CLIENT_SSL);
 
 if (!$conn) {
     die("Kết nối Aiven thất bại: " . mysqli_connect_error());
