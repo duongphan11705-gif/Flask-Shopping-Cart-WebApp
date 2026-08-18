@@ -1,4 +1,3 @@
-
 <?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -29,10 +28,15 @@ function callGemini($prompt) {
     return "Trợ lý AI đang cập nhật thông số cấu hình phần mềm, bạn hỏi lại sau vài giây nhé!";
 }
 
-// KẾT NỐI DATABASE & TỰ ĐỘNG KHỞI TẠO BẢNG
-$conn = mysqli_connect("localhost", "root", "");
-mysqli_query($conn, "CREATE DATABASE IF NOT EXISTS `phoneshop` CHARACTER SET utf8mb4");
-mysqli_select_db($conn, "phoneshop");
+// KẾT NỐI DATABASE AIVEN & TỰ ĐỘNG KHỞI TẠO BẢNG
+$conn = mysqli_init();
+mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL);
+// Kết nối với Host, User, Pass, DB, Port và cờ kết nối SSL
+mysqli_real_connect($conn, "mysql-17895759-duongphan11705-c6e4.i.aivencloud.com", "avnadmin", "AVNS_1xyPm72gzoTQSxU-0PD", "defaultdb", 28878, NULL, MYSQLI_CLIENT_SSL);
+
+if (!$conn) {
+    die("Kết nối Aiven thất bại: " . mysqli_connect_error());
+}
 
 mysqli_query($conn, "CREATE TABLE IF NOT EXISTS `products` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -260,7 +264,6 @@ if (isset($_SESSION['cart'])) {
                                         echo '<td class="text-danger">' . number_format($p_row['price']) . ' đ</td>';
                                         echo '<td>' . $qty . '</td>';
                                         echo '<td class="fw-bold text-danger">' . number_format($subtotal) . ' đ</td>';
-                                        // NÚT HÀNH ĐỘNG XÓA SẢN PHẨM TRONG GIỎ HÀNG
                                         echo '<td><a href="index.php?action=remove_item&id=' . $p_id . '" class="btn btn-sm text-danger p-0"><i class="bi bi-trash-fill fs-6"></i></a></td>';
                                         echo '</tr>';
                                     }
